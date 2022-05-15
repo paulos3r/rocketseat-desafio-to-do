@@ -82,13 +82,12 @@ app.put('/todos/:id',checksExistsUserAccount, (request, response) => {
   todo.title = title;
   todo.deadline = new Date(deadline);
 
-  return response.json();
+  return response.json(todo);
 });
-
+//Todos should be able to update a todo
 app.patch('/todos/:id/done', checksExistsUserAccount, (request, response) => {
   // Complete aqui
   const { user } = request;
-  const { done } = request.body;
   const { id } = request.params;
 
   const todo = user.todos.find((todo) => todo.id === id);
@@ -97,7 +96,7 @@ app.patch('/todos/:id/done', checksExistsUserAccount, (request, response) => {
     return response.status(404).json({error: "Todo not found"});
   }
 
-  todo.done = done;
+  todo.done = true;
 
   return response.json(todo)
 });
